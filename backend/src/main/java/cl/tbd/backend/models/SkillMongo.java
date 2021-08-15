@@ -1,23 +1,26 @@
 package cl.tbd.backend.models;
+import org.springframework.data.annotation.Id;
 
-public class Skill {
-    private Long id;
+public class SkillMongo {
+    @Id private String id;
     private String name;
     private String description;
+    private String codigo;
     private Boolean delete;
 
-    public Skill(Long id, String name, String description, Boolean delete) {
+    public SkillMongo(String id, String name, String description, String codigo, Boolean delete) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.codigo = codigo;
         this.delete = delete;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -37,6 +40,14 @@ public class Skill {
         this.description = description;
     }
 
+    public String getCodigo() {
+        return this.codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
     public Boolean getDelete() {
         return delete;
     }
@@ -44,6 +55,4 @@ public class Skill {
     public void setDelete(Boolean delete) {
         this.delete = delete;
     }
-
-
 }
