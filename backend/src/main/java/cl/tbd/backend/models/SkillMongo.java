@@ -5,14 +5,14 @@ public class SkillMongo {
     @Id private String id;
     private String name;
     private String description;
-    private String codigo;
+    private String code;
     private Boolean delete;
 
-    public SkillMongo(String id, String name, String description, String codigo, Boolean delete) {
+    public SkillMongo(String id, String name, String description, String code, Boolean delete) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.codigo = codigo;
+        this.code = code;
         this.delete = delete;
     }
 
@@ -40,12 +40,12 @@ public class SkillMongo {
         this.description = description;
     }
 
-    public String getCodigo() {
-        return this.codigo;
+    public String getCode() {
+        return code;
     }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public Boolean getDelete() {

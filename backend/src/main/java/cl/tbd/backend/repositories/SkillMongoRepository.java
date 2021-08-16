@@ -9,5 +9,5 @@ import java.util.List;
 
 @RepositoryRestResource(collectionResourceRel = "SkillMongo", path = "SkillMongo")
 public interface SkillMongoRepository extends MongoRepository<SkillMongo, String> {
-    List<SkillMongo> findByName(@Param("name") String name);
+    List<SkillMongo> findByCode(@Param("code") String code);
 }
