@@ -1,0 +1,2 @@
+load("C:/Users/cuchu/Desktop/TBD/Repositorios/dbCreate.js")
+load("C:/Users/cuchu/Desktop/TBD/Repositorios/loadData.js")
