@@ -1,2 +1,35 @@
 load("C:/Users/cuchu/Desktop/TBD/Repositorios/dbCreate.js")
 load("C:/Users/cuchu/Desktop/TBD/Repositorios/loadData.js")
+
+--
+
+import java.util.Arrays;
+import org.bson.BsonNull;
+import static com.mongodb.client.model.Filters.size;
+import static com.mongodb.client.model.Aggregates.group;
+import static com.mongodb.client.model.Aggregates.lookup;
+import static com.mongodb.client.model.Accumulators.avg;
+import static com.mongodb.client.model.Accumulators.first;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.bson.conversions.Bson;
+import java.util.concurrent.TimeUnit;
+import org.bson.Document;
+
+/*
+ * Requires the MongoDB Java Driver.
+ * https://mongodb.github.io/mongo-java-driver
+ */
+
+MongoClient mongoClient = new MongoClient(
+    new MongoClientURI(
+        "mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false"
+    )
+);
+MongoDatabase database = mongoClient.getDatabase("TBD");
+MongoCollection<Document> collection = database.getCollection("volunteerMongo");
+
+FindIterable<Document> result = collection.aggregate(Arrays.asList(lookup("skillMongo", "skill", "code", "skills"), group("$_id", first("numHabilidades", size("$first", "$skills"))), group(new BsonNull(), avg("promedio", "$numHabilidades"))));
