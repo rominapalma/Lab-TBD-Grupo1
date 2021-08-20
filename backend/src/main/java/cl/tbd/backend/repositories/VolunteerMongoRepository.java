@@ -7,7 +7,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
 
-@RepositoryRestResource(collectionResourceRel = "VolunteerMongo", path = "VolunteerMongo")
-public interface VolunteerMongoRepository extends MongoRepository<VolunteerMongo, String> {
-    List<VolunteerMongo> findByName(@Param("name") String name);
+
+public interface VolunteerMongoRepository {
+    public float AvgSkillByVolunteer();
 }

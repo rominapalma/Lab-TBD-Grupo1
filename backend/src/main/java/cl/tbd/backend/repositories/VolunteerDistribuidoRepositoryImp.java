@@ -24,43 +24,49 @@ public class VolunteerDistribuidoRepositoryImp implements VolunteerDistribuidoRe
         String sql;
         try (Connection conn = sql2o.open()) {
             if(idHash == 0){
-                sql = "INSERT INTO volunteer0 (id, name, email, password, availability, delete) values (:id, :name, :email, :password, :availability, :delete)";
+                sql = "INSERT INTO volunteer0 (id, name, email, password, availability, origin, delete) values (:id, :name, :email, :password, :availability, :origin, :delete)";
                 Long insertedId = conn.createQuery(sql, true)
                         .addParameter("id", idNew)
                         .addParameter("name", VolunteerNew.getName())
                         .addParameter("email", VolunteerNew.getEmail())
                         .addParameter("password", VolunteerNew.getPassword())
                         .addParameter("availability", VolunteerNew.getAvailability())
+                        .addParameter("origin", "volunteer0")
                         .addParameter("delete", VolunteerNew.getDelete())
                         .executeUpdate().getKey(Long.class);
                 VolunteerNew.setId(insertedId);
+                VolunteerNew.setOrigin("volunteer0");
                 VolunteerNew.setDelete(false);
                 return VolunteerNew;
             }
             else if(idHash == 1){
-                sql = "INSERT INTO volunteer1 (id, name, email,password, availability, delete) values (:id, :name, :email, :password, :availability, :delete)";
+                sql = "INSERT INTO volunteer1 (id, name, email,password, availability, origin, delete) values (:id, :name, :email, :password, :availability, :origin, :delete)";
                 Long insertedId = conn.createQuery(sql, true)
                         .addParameter("id", idNew)
                         .addParameter("name", VolunteerNew.getName())
                         .addParameter("email", VolunteerNew.getEmail())
                         .addParameter("password", VolunteerNew.getPassword())
                         .addParameter("availability", VolunteerNew.getAvailability())
+                        .addParameter("origin", "volunteer1")
                         .addParameter("delete", VolunteerNew.getDelete())
                         .executeUpdate().getKey(Long.class);
                 VolunteerNew.setId(insertedId);
+                VolunteerNew.setOrigin("volunteer1");
                 VolunteerNew.setDelete(false);
                 return VolunteerNew;
             }
-            sql = "INSERT INTO volunteer2 (id, name, email, password, availability, delete) values (:id, :name, :email, :password, :availability, :delete)";
+            sql = "INSERT INTO volunteer2 (id, name, email, password, availability, origin, delete) values (:id, :name, :email, :password, :availability, :origin, :delete)";
             Long insertedId = conn.createQuery(sql, true)
                     .addParameter("id", idNew)
                     .addParameter("name", VolunteerNew.getName())
                     .addParameter("email", VolunteerNew.getEmail())
                     .addParameter("password", VolunteerNew.getPassword())
                     .addParameter("availability", VolunteerNew.getAvailability())
+                    .addParameter("origin", "volunteer2")
                     .addParameter("delete", VolunteerNew.getDelete())
                     .executeUpdate().getKey(Long.class);
             VolunteerNew.setId(insertedId);
+            VolunteerNew.setOrigin("volunteer2");
             VolunteerNew.setDelete(false);
             return VolunteerNew;
 
@@ -92,7 +98,7 @@ public class VolunteerDistribuidoRepositoryImp implements VolunteerDistribuidoRe
         if(idHash == 0){
             try (Connection conn = sql2o.open()) {
                 return conn.createQuery(
-                        "select id, name, email, password, availability, delete from volunteer0 where volunteer0.id = :id and delete=false")
+                        "select id, name, email, password, availability, origin, delete from volunteer0 where volunteer0.id = :id and delete=false")
                         .addParameter("id", id)
                         .executeAndFetch(VolunteerDistribuido.class);
             } catch (Exception e) {
@@ -103,7 +109,7 @@ public class VolunteerDistribuidoRepositoryImp implements VolunteerDistribuidoRe
         else if(idHash == 1){
             try (Connection conn = sql2o.open()) {
                 return conn.createQuery(
-                        "select id, name, email, password, availability, delete from volunteer1 where volunteer1.id = :id and delete=false")
+                        "select id, name, email, password, availability, origin, delete from volunteer1 where volunteer1.id = :id and delete=false")
                         .addParameter("id", id)
                         .executeAndFetch(VolunteerDistribuido.class);
             } catch (Exception e) {
@@ -113,7 +119,7 @@ public class VolunteerDistribuidoRepositoryImp implements VolunteerDistribuidoRe
         }
         try (Connection conn = sql2o.open()) {
             return conn.createQuery(
-                    "select id, name, email, password, availability, delete from volunteer2 where volunteer2.id = :id and delete=false")
+                    "select id, name, email, password, availability, origin, delete from volunteer2 where volunteer2.id = :id and delete=false")
                     .addParameter("id", id)
                     .executeAndFetch(VolunteerDistribuido.class);
         } catch (Exception e) {

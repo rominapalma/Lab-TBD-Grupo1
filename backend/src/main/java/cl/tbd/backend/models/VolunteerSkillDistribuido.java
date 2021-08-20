@@ -4,12 +4,14 @@ public class VolunteerSkillDistribuido {
     private Long id;
     private int id_volunteer;
     private int id_skill;
+    private String origin;
     private Boolean delete;
 
-    public VolunteerSkillDistribuido(Long id, int id_volunteer, int id_skill, Boolean delete) {
+    public VolunteerSkillDistribuido(Long id, int id_volunteer, int id_skill, String origin, Boolean delete) {
         this.id = id;
         this.id_volunteer = id_volunteer;
         this.id_skill = id_skill;
+        this.origin = origin;
         this.delete = delete;
     }
 
@@ -35,6 +37,14 @@ public class VolunteerSkillDistribuido {
 
     public void setId_skill(int id_skill) {
         this.id_skill = id_skill;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
     }
 
     public Boolean getDelete() {

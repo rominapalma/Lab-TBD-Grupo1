@@ -21,6 +21,7 @@ CREATE TABLE public.volunteer0 (
   "email" varchar(80),
   "password" varchar(80),
   "availability" boolean,
+  "origin" varchar(40),
   "delete" boolean default false,
   PRIMARY KEY ("id")
 );
@@ -33,6 +34,7 @@ CREATE TABLE public.volunteer1 (
   "email" varchar(80),
   "password" varchar(80),
   "availability" boolean,
+  "origin" varchar(40),
   "delete" boolean default false,
   PRIMARY KEY ("id")
 );
@@ -45,6 +47,7 @@ CREATE TABLE public.volunteer2 (
   "email" varchar(80),
   "password" varchar(80),
   "availability" boolean,
+  "origin" varchar(40),
   "delete" boolean default false,
   PRIMARY KEY ("id")
 );
@@ -68,6 +71,7 @@ CREATE TABLE public.volunteer_skill0 (
   "id" serial,
   "id_volunteer" integer, --foranea
   "id_skill" integer, --foranea
+  "origin" varchar(40),
   "delete" boolean default false,
   PRIMARY KEY ("id")
 );
@@ -80,6 +84,7 @@ CREATE TABLE public.volunteer_skill1 (
   "id" serial,
   "id_volunteer" integer, --foranea
   "id_skill" integer, --foranea
+  "origin" varchar(40),
   "delete" boolean default false,
   PRIMARY KEY ("id")
 );
@@ -92,6 +97,7 @@ CREATE TABLE public.volunteer_skill2 (
   "id" serial,
   "id_volunteer" integer, --foranea
   "id_skill" integer, --foranea
+  "origin" varchar(40),
   "delete" boolean default false,
   PRIMARY KEY ("id")
 );

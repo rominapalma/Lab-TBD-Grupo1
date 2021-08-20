@@ -25,37 +25,43 @@ public class VolunteerSkillDistribuidoRepositoryImp implements VolunteerSkillDis
         String sql = null;
         try(Connection conn = sql2o.open()){
             if(idHash == 0){
-                sql = "INSERT INTO Volunteer_skill0 (id, id_Volunteer, id_skill, delete) values (:id, :id_Volunteer, :id_skill, :delete)";
+                sql = "INSERT INTO Volunteer_skill0 (id, id_Volunteer, id_skill, origin, delete) values (:id, :id_Volunteer, :id_skill, :origin, :delete)";
                 Long insertedId =  conn.createQuery(sql, true)
                         .addParameter("id", idNew)
                         .addParameter("id_Volunteer", VolunteerSkillNew.getId_volunteer())
                         .addParameter("id_skill", VolunteerSkillNew.getId_skill())
+                        .addParameter("origin", "volunteer_skill0")
                         .addParameter("delete", VolunteerSkillNew.getDelete())
                         .executeUpdate().getKey(Long.class);
                 VolunteerSkillNew.setId(insertedId);
+                VolunteerSkillNew.setOrigin("volunteer_skill0");
                 VolunteerSkillNew.setDelete(false);
                 return VolunteerSkillNew;
             }
             else if(idHash == 1){
-                sql = "INSERT INTO Volunteer_skill1 (id, id_Volunteer, id_skill, delete) values (:id, :id_Volunteer, :id_skill, :delete)";
+                sql = "INSERT INTO Volunteer_skill1 (id, id_Volunteer, id_skill, origin, delete) values (:id, :id_Volunteer, :id_skill, :origin, :delete)";
                 Long insertedId =  conn.createQuery(sql, true)
                         .addParameter("id", idNew)
                         .addParameter("id_Volunteer", VolunteerSkillNew.getId_volunteer())
                         .addParameter("id_skill", VolunteerSkillNew.getId_skill())
+                        .addParameter("origin", "volunteer_skill1")
                         .addParameter("delete", VolunteerSkillNew.getDelete())
                         .executeUpdate().getKey(Long.class);
                 VolunteerSkillNew.setId(insertedId);
+                VolunteerSkillNew.setOrigin("volunteer_skill1");
                 VolunteerSkillNew.setDelete(false);
                 return VolunteerSkillNew;
             }
-            sql = "INSERT INTO Volunteer_skill2 (id, id_Volunteer, id_skill, delete) values (:id, :id_Volunteer, :id_skill, :delete)";
+            sql = "INSERT INTO Volunteer_skill2 (id, id_Volunteer, id_skill, origin, delete) values (:id, :id_Volunteer, :id_skill, :origin, :delete)";
             Long insertedId =  conn.createQuery(sql, true)
                     .addParameter("id", idNew)
                     .addParameter("id_Volunteer", VolunteerSkillNew.getId_volunteer())
                     .addParameter("id_skill", VolunteerSkillNew.getId_skill())
+                    .addParameter("origin", "volunteer_skill2")
                     .addParameter("delete", VolunteerSkillNew.getDelete())
                     .executeUpdate().getKey(Long.class);
             VolunteerSkillNew.setId(insertedId);
+            VolunteerSkillNew.setOrigin("volunteer_skill2");
             VolunteerSkillNew.setDelete(false);
             return VolunteerSkillNew;
 

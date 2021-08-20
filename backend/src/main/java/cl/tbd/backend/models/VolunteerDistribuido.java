@@ -7,14 +7,16 @@ public class VolunteerDistribuido {
     private String email;
     private String password;
     private Boolean availability;
+    private String origin;
     private Boolean delete;
 
-    public VolunteerDistribuido(Long id, String name, String email, String password, Boolean availability, Boolean delete) {
+    public VolunteerDistribuido(Long id, String name, String email, String password, Boolean availability, String origin, Boolean delete) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.availability = availability;
+        this.origin = origin;
         this.delete = delete;
     }
 
@@ -56,6 +58,14 @@ public class VolunteerDistribuido {
 
     public void setAvailability(Boolean availability) {
         this.availability = availability;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
     }
 
     public Boolean getDelete() {
