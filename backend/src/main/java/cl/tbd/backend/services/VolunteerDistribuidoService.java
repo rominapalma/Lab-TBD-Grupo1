@@ -34,8 +34,8 @@ public class VolunteerDistribuidoService {
 
     @PutMapping("/volunteerDistribuido/{id}/")
     @ResponseBody
-    public VolunteerDistribuido updateVolunteer(VolunteerDistribuido volunteerNew, @PathVariable Long idVolunteer) {
-        return volunteerDistribuidoRepository.updateVolunteerDistribuido(volunteerNew, idVolunteer);
+    public VolunteerDistribuido updateVolunteer(VolunteerDistribuido volunteerNew, @PathVariable Long id) {
+        return volunteerDistribuidoRepository.updateVolunteerDistribuido(volunteerNew, id);
     }
 
     @DeleteMapping("/volunteerDistribuido/{id}/")

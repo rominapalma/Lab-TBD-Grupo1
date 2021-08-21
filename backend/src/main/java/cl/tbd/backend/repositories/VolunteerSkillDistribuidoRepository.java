@@ -11,7 +11,7 @@ public interface VolunteerSkillDistribuidoRepository {
 
     public List<VolunteerSkillDistribuido> findAllVolunteerSkillDistribuidoById(Long id);
 
-    public VolunteerSkillDistribuido updateVolunteerSkillDistribuido(VolunteerSkillDistribuido VolunteerNew, Long idVolunteer);
+    public VolunteerSkillDistribuido updateVolunteerSkillDistribuido(VolunteerSkillDistribuido VolunteerNew, Long id);
 
     public Boolean deleteVolunteerSkillDistribuido(Long id);
 }

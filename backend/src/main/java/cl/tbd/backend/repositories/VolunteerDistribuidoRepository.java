@@ -12,7 +12,7 @@ public interface VolunteerDistribuidoRepository {
 
     public List<VolunteerDistribuido> findAllVolunteerDistribuidoById(Long id);
 
-    public VolunteerDistribuido updateVolunteerDistribuido(VolunteerDistribuido VolunteerNew, Long idVolunteer);
+    public VolunteerDistribuido updateVolunteerDistribuido(VolunteerDistribuido VolunteerNew, Long id);
 
     public Boolean deleteVolunteerDistribuido(Long id);
 }

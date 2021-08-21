@@ -31,7 +31,7 @@ public class VolunteerSkillDistribuidoRepositoryImp implements VolunteerSkillDis
                         .addParameter("id_Volunteer", VolunteerSkillNew.getId_volunteer())
                         .addParameter("id_skill", VolunteerSkillNew.getId_skill())
                         .addParameter("origin", "volunteer_skill0")
-                        .addParameter("delete", VolunteerSkillNew.getDelete())
+                        .addParameter("delete", false)
                         .executeUpdate().getKey(Long.class);
                 VolunteerSkillNew.setId(insertedId);
                 VolunteerSkillNew.setOrigin("volunteer_skill0");
@@ -45,7 +45,7 @@ public class VolunteerSkillDistribuidoRepositoryImp implements VolunteerSkillDis
                         .addParameter("id_Volunteer", VolunteerSkillNew.getId_volunteer())
                         .addParameter("id_skill", VolunteerSkillNew.getId_skill())
                         .addParameter("origin", "volunteer_skill1")
-                        .addParameter("delete", VolunteerSkillNew.getDelete())
+                        .addParameter("delete", false)
                         .executeUpdate().getKey(Long.class);
                 VolunteerSkillNew.setId(insertedId);
                 VolunteerSkillNew.setOrigin("volunteer_skill1");
@@ -58,7 +58,7 @@ public class VolunteerSkillDistribuidoRepositoryImp implements VolunteerSkillDis
                     .addParameter("id_Volunteer", VolunteerSkillNew.getId_volunteer())
                     .addParameter("id_skill", VolunteerSkillNew.getId_skill())
                     .addParameter("origin", "volunteer_skill2")
-                    .addParameter("delete", VolunteerSkillNew.getDelete())
+                    .addParameter("delete", false)
                     .executeUpdate().getKey(Long.class);
             VolunteerSkillNew.setId(insertedId);
             VolunteerSkillNew.setOrigin("volunteer_skill2");
@@ -73,9 +73,18 @@ public class VolunteerSkillDistribuidoRepositoryImp implements VolunteerSkillDis
 
     @Override
     public List<VolunteerSkillDistribuido> findAllVolunteerSkillDistribuido() {
-        String sql = "select Volunteer_skill0.* from volunteer_skill0 where volunteer_skill0.delete = false "
-                + "UNION ALL select Volunteer_skill1.* from volunteer_skill1 where volunteer_skill1.delete = false "
-                + "UNION ALL select Volunteer_skill2.* from volunteer_skill2 where volunteer_skill2.delete = false ORDER BY id";
+        String sql = "select volunteer_skill0.*\n" +
+                "from volunteer_skill0\n" +
+                "where volunteer_skill0.delete = false\n" +
+                "UNION ALL\n" +
+                "select volunteer_skill1.*\n" +
+                "from volunteer_skill1\n" +
+                "where volunteer_skill1.delete = false\n" +
+                "UNION ALL\n" +
+                "select volunteer_skill2.*\n" +
+                "from volunteer_skill2\n" +
+                "where volunteer_skill2.delete = false\n" +
+                "ORDER BY id";
         try(Connection conn = sql2o.open()){
             return conn.createQuery(sql)
                     .executeAndFetch(VolunteerSkillDistribuido.class);
@@ -90,7 +99,7 @@ public class VolunteerSkillDistribuidoRepositoryImp implements VolunteerSkillDis
         Long idHash = FuncionHash(id);
         String sql = null;
         if(idHash == 0){
-            sql = "select Volunteer_skill0.* from Volunteer_skill0 where Volunteer_skill0.id = :id and delete=false";
+            sql = "select * from volunteer_skill0 where id = :id and delete = false";
             try (Connection conn = sql2o.open()) {
                 return conn.createQuery(sql)
                         .addParameter("id", id)
@@ -101,7 +110,7 @@ public class VolunteerSkillDistribuidoRepositoryImp implements VolunteerSkillDis
             }
         }
         else if(idHash == 1){
-            sql = "select Volunteer_skill1.* from Volunteer_skill1 where Volunteer_skill1.id = :id and delete=false";
+            sql = "select * from volunteer_skill1 where id = :id and delete = false";
             try (Connection conn = sql2o.open()) {
                 return conn.createQuery(sql)
                         .addParameter("id", id)
@@ -111,7 +120,7 @@ public class VolunteerSkillDistribuidoRepositoryImp implements VolunteerSkillDis
                 return null;
             }
         }
-        sql = "select Volunteer_skill2.* from Volunteer_skill2 where Volunteer_skill2.id = :id and delete=false";
+        sql = "select * from volunteer_skill2 where id = :id and delete = false";
         try (Connection conn = sql2o.open()) {
             return conn.createQuery(sql)
                     .addParameter("id", id)
@@ -125,25 +134,43 @@ public class VolunteerSkillDistribuidoRepositoryImp implements VolunteerSkillDis
     }
 
     @Override
-    public VolunteerSkillDistribuido updateVolunteerSkillDistribuido(VolunteerSkillDistribuido VolunteerSkillNew, Long idVolunteerSkill) {
-        Long idHash = FuncionHash(idVolunteerSkill);
+    public VolunteerSkillDistribuido updateVolunteerSkillDistribuido(VolunteerSkillDistribuido VolunteerSkillNew, Long id) {
+        Long idHash = FuncionHash(id);
         String sql = null;
         try(Connection conn = sql2o.open()){
             if(idHash == 0) {
-                sql = "UPDATE Volunteer_skill0 SET id_Volunteer = :id_Volunteer, id_skill = :id_skill, delete = :delete WHERE id = :id and delete=false";
+                sql = "UPDATE Volunteer_skill0 SET id_Volunteer = :id_Volunteer, id_skill = :id_skill, origin = :origin, delete = :delete WHERE id = :id ";
+                conn.createQuery(sql, true)
+                        .addParameter("id",VolunteerSkillNew.getId())
+                        .addParameter("id_Volunteer",VolunteerSkillNew.getId_volunteer())
+                        .addParameter("id_skill", VolunteerSkillNew.getId_skill())
+                        .addParameter("origin", "Volunteer_skill0")
+                        .addParameter("delete", VolunteerSkillNew.getDelete())
+                        .executeUpdate();
+                VolunteerSkillNew.setOrigin("Volunteer_skill0");
+                return VolunteerSkillNew;
             }
             else if(idHash == 1){
-                sql = "UPDATE Volunteer_skill1 SET id_Volunteer = :id_Volunteer, id_skill = :id_skill, delete = :delete WHERE id = :id and delete=false";
+                sql = "UPDATE Volunteer_skill1 SET id_Volunteer = :id_Volunteer, id_skill = :id_skill, origin = :origin, delete = :delete WHERE id = :id ";
+                conn.createQuery(sql, true)
+                        .addParameter("id",VolunteerSkillNew.getId())
+                        .addParameter("id_Volunteer",VolunteerSkillNew.getId_volunteer())
+                        .addParameter("id_skill", VolunteerSkillNew.getId_skill())
+                        .addParameter("origin", "Volunteer_skill1")
+                        .addParameter("delete", VolunteerSkillNew.getDelete())
+                        .executeUpdate();
+                VolunteerSkillNew.setOrigin("Volunteer_skill1");
+                return VolunteerSkillNew;
             }
-            else if(idHash == 2){
-                sql = "UPDATE Volunteer_skill2 SET id_Volunteer = :id_Volunteer, id_skill = :id_skill, delete = :delete WHERE id = :id and delete=false";
-            }
+            sql = "UPDATE Volunteer_skill2 SET id_Volunteer = :id_Volunteer, id_skill = :id_skill, origin = :origin, delete = :delete WHERE id = :id ";
             conn.createQuery(sql, true)
                     .addParameter("id",VolunteerSkillNew.getId())
                     .addParameter("id_Volunteer",VolunteerSkillNew.getId_volunteer())
                     .addParameter("id_skill", VolunteerSkillNew.getId_skill())
+                    .addParameter("origin", "Volunteer_skill2")
                     .addParameter("delete", VolunteerSkillNew.getDelete())
                     .executeUpdate();
+            VolunteerSkillNew.setOrigin("Volunteer_skill2");
             return VolunteerSkillNew;
         }catch(Exception e){
             System.out.println(e.getMessage());
@@ -153,29 +180,31 @@ public class VolunteerSkillDistribuidoRepositoryImp implements VolunteerSkillDis
 
     @Override
     public Boolean deleteVolunteerSkillDistribuido(Long id) {
-        Long idHash = FuncionHash(id);
-        try(Connection con = sql2o.open()) {
-            if(idHash == 0){
-                id = (Long) con.createQuery("UPDATE volunteer_skill0 SET delete = true WHERE id = :id and delete=false",true)
-                        .addParameter("id",id)
+            Long idHash = FuncionHash(id);
+            try (Connection con = sql2o.open()) {
+                if(idHash == 0){
+                    id = (Long) con.createQuery("UPDATE volunteer_skill0 SET delete = true WHERE id = :id and delete=false", true)
+                            .addParameter("id", id)
+                            .executeUpdate().getKey();
+                    return (id != null);
+                }
+                else if(idHash == 1){
+                    id = (Long) con.createQuery("UPDATE volunteer_skill1 SET delete = true WHERE id = :id and delete=false", true)
+                            .addParameter("id", id)
+                            .executeUpdate().getKey();
+                    return (id != null);
+                }
+                id = (Long) con.createQuery("UPDATE volunteer_skill2 SET delete = true WHERE id = :id and delete=false", true)
+                        .addParameter("id", id)
                         .executeUpdate().getKey();
-                return (id!=null);
+                return (id != null);
+
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                return id == null;
             }
-            else if(idHash == 1){
-                id = (Long) con.createQuery("UPDATE volunteer_skill1 SET delete = true WHERE id = :id and delete=false",true)
-                        .addParameter("id",id)
-                        .executeUpdate().getKey();
-                return (id!=null);
-            }
-            id = (Long) con.createQuery("UPDATE volunteer_skill1 SET delete = true WHERE id = :id and delete=false",true)
-                    .addParameter("id",id)
-                    .executeUpdate().getKey();
-            return (id!=null);
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-            return id==null;
         }
-    }
 
     public Long lastId() {
         Long lastId0;
@@ -184,17 +213,17 @@ public class VolunteerSkillDistribuidoRepositoryImp implements VolunteerSkillDis
 
         try (Connection conn = sql2o.open()) {
             lastId0 = Long.parseLong(
-                    String.valueOf(conn.createQuery("select max(volunteer_skill0.id) from volunteer_skill0 WHERE delete=false", true)
+                    String.valueOf(conn.createQuery("select max(volunteer_skill0.id) from volunteer_skill0", true)
                             .executeScalar(long.class)));
             lastId1 = Long.parseLong(
-                    String.valueOf(conn.createQuery("select max(volunteer_skill1.id) from volunteer_skill1 WHERE delete=false", true)
+                    String.valueOf(conn.createQuery("select max(volunteer_skill1.id) from volunteer_skill1", true)
                             .executeScalar(long.class)));
             lastId2 = Long.parseLong(
-                    String.valueOf(conn.createQuery("select max(volunteer_skill2.id) from volunteer_skill2 WHERE delete=false", true)
+                    String.valueOf(conn.createQuery("select max(volunteer_skill2.id) from volunteer_skill2", true)
                             .executeScalar(long.class)));
             if(lastId0 > lastId1 && lastId0 > lastId2) return lastId0;
             else if(lastId1 > lastId0 && lastId1 > lastId2) return lastId1;
-            return lastId2;
+            else return lastId2;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return Long.valueOf(0);

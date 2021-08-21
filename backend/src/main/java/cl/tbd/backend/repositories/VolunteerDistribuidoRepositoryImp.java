@@ -32,9 +32,10 @@ public class VolunteerDistribuidoRepositoryImp implements VolunteerDistribuidoRe
                         .addParameter("password", VolunteerNew.getPassword())
                         .addParameter("availability", VolunteerNew.getAvailability())
                         .addParameter("origin", "volunteer0")
-                        .addParameter("delete", VolunteerNew.getDelete())
+                        .addParameter("delete", false)
                         .executeUpdate().getKey(Long.class);
                 VolunteerNew.setId(insertedId);
+                VolunteerNew.setName(VolunteerNew.getName());
                 VolunteerNew.setOrigin("volunteer0");
                 VolunteerNew.setDelete(false);
                 return VolunteerNew;
@@ -48,7 +49,7 @@ public class VolunteerDistribuidoRepositoryImp implements VolunteerDistribuidoRe
                         .addParameter("password", VolunteerNew.getPassword())
                         .addParameter("availability", VolunteerNew.getAvailability())
                         .addParameter("origin", "volunteer1")
-                        .addParameter("delete", VolunteerNew.getDelete())
+                        .addParameter("delete", false)
                         .executeUpdate().getKey(Long.class);
                 VolunteerNew.setId(insertedId);
                 VolunteerNew.setOrigin("volunteer1");
@@ -63,7 +64,7 @@ public class VolunteerDistribuidoRepositoryImp implements VolunteerDistribuidoRe
                     .addParameter("password", VolunteerNew.getPassword())
                     .addParameter("availability", VolunteerNew.getAvailability())
                     .addParameter("origin", "volunteer2")
-                    .addParameter("delete", VolunteerNew.getDelete())
+                    .addParameter("delete", false)
                     .executeUpdate().getKey(Long.class);
             VolunteerNew.setId(insertedId);
             VolunteerNew.setOrigin("volunteer2");
@@ -131,40 +132,53 @@ public class VolunteerDistribuidoRepositoryImp implements VolunteerDistribuidoRe
     }
 
     @Override
-    public VolunteerDistribuido updateVolunteerDistribuido(VolunteerDistribuido VolunteerNew, Long idVolunteer) {
-        Long idHash = FuncionHash(idVolunteer);
+    public VolunteerDistribuido updateVolunteerDistribuido(VolunteerDistribuido VolunteerNew, Long id) {
+        Long idHash = FuncionHash(id);
         String sql = null;
+
         try (Connection conn = sql2o.open()) {
             if(idHash == 0) {
-                sql = "UPDATE volunteer0 SET name = :name, email = :email, password = :password, availability = :availability, delete = :delete WHERE id = :id and delete=false";
-                conn.createQuery(sql, true).addParameter("id", VolunteerNew.getId())
+                sql = "UPDATE volunteer0 SET name = :name, email = :email, password = :password, availability = :availability, origin = :origin, delete = :delete WHERE id = :id ";
+                conn.createQuery(sql, true)
+                        .addParameter("id", id)
                         .addParameter("name", VolunteerNew.getName())
                         .addParameter("email", VolunteerNew.getEmail())
                         .addParameter("password", VolunteerNew.getPassword())
                         .addParameter("availability", VolunteerNew.getAvailability())
+                        .addParameter("origin", "volunteer0")
                         .addParameter("delete", VolunteerNew.getDelete())
                         .executeUpdate();
+                VolunteerNew.setOrigin("volunteer0");
+                VolunteerNew.setDelete(VolunteerNew.getDelete());
                 return VolunteerNew;
             }
             else if(idHash == 1){
-                sql = "UPDATE volunteer1 SET name = :name, email = :email, password = :password, availability = :availability, delete = :delete WHERE id = :id and delete=false";
-                conn.createQuery(sql, true).addParameter("id", VolunteerNew.getId())
+                sql = "UPDATE volunteer1 SET name = :name, email = :email, password = :password, availability = :availability, origin = :origin, delete = :delete WHERE id = :id ";
+                conn.createQuery(sql, true)
+                        .addParameter("id", id)
                         .addParameter("name", VolunteerNew.getName())
                         .addParameter("email", VolunteerNew.getEmail())
                         .addParameter("password", VolunteerNew.getPassword())
                         .addParameter("availability", VolunteerNew.getAvailability())
+                        .addParameter("origin", "volunteer1")
                         .addParameter("delete", VolunteerNew.getDelete())
                         .executeUpdate();
+                VolunteerNew.setOrigin("volunteer1");
+                VolunteerNew.setDelete(VolunteerNew.getDelete());
                 return VolunteerNew;
             }
-            sql = "UPDATE volunteer2 SET name = :name, email = :email, password = :password, availability = :availability, delete = :delete WHERE id = :id and delete=false";
-            conn.createQuery(sql, true).addParameter("id", VolunteerNew.getId())
+            sql = "UPDATE volunteer2 SET name = :name, email = :email, password = :password, availability = :availability, origin = :origin, delete = :delete WHERE id = :id ";
+            conn.createQuery(sql, true)
+                    .addParameter("id", id)
                     .addParameter("name", VolunteerNew.getName())
                     .addParameter("email", VolunteerNew.getEmail())
                     .addParameter("password", VolunteerNew.getPassword())
                     .addParameter("availability", VolunteerNew.getAvailability())
+                    .addParameter("origin", "volunteer2")
                     .addParameter("delete", VolunteerNew.getDelete())
                     .executeUpdate();
+            VolunteerNew.setOrigin("volunteer2");
+            VolunteerNew.setDelete(VolunteerNew.getDelete());
             return VolunteerNew;
 
 
@@ -209,13 +223,13 @@ public class VolunteerDistribuidoRepositoryImp implements VolunteerDistribuidoRe
 
         try (Connection conn = sql2o.open()) {
             lastId0 = Long.parseLong(
-                    String.valueOf(conn.createQuery("select max(volunteer0.id) from volunteer0 WHERE delete=false", true)
+                    String.valueOf(conn.createQuery("select max(volunteer0.id) from volunteer0", true)
                             .executeScalar(long.class)));
             lastId1 = Long.parseLong(
-                    String.valueOf(conn.createQuery("select max(volunteer1.id) from volunteer1 WHERE delete=false", true)
+                    String.valueOf(conn.createQuery("select max(volunteer1.id) from volunteer1", true)
                             .executeScalar(long.class)));
             lastId2 = Long.parseLong(
-                    String.valueOf(conn.createQuery("select max(volunteer2.id) from volunteer2 WHERE delete=false", true)
+                    String.valueOf(conn.createQuery("select max(volunteer2.id) from volunteer2", true)
                             .executeScalar(long.class)));
             if(lastId0 > lastId1 && lastId0 > lastId2) return lastId0;
             else if(lastId1 > lastId0 && lastId1 > lastId2) return lastId1;

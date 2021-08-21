@@ -25,6 +25,7 @@ public class VolunteerSkillDistribuidoService {
         return volunteerSkillDistribuidoRepository.findAllVolunteerSkillDistribuido();
     }
 
+
     @GetMapping("/volunteerSkillDistribuido/{id}")
     public List<VolunteerSkillDistribuido> findAllVolunteerSkillDistribuidoById(@PathVariable Long id) {
         return volunteerSkillDistribuidoRepository.findAllVolunteerSkillDistribuidoById(id);
@@ -32,8 +33,8 @@ public class VolunteerSkillDistribuidoService {
 
     @PutMapping("/volunteerSkillDistribuido/{id}/")
     @ResponseBody
-    public VolunteerSkillDistribuido updateVolunteerSkillDistribuido(VolunteerSkillDistribuido volunteerNew, @PathVariable Long idVolunteer) {
-        return volunteerSkillDistribuidoRepository.updateVolunteerSkillDistribuido(volunteerNew, idVolunteer);
+    public VolunteerSkillDistribuido updateVolunteerSkillDistribuido(VolunteerSkillDistribuido volunteerNew, @PathVariable Long id) {
+        return volunteerSkillDistribuidoRepository.updateVolunteerSkillDistribuido(volunteerNew, id);
     }
 
     @DeleteMapping("/volunteerSkillDistribuido/{id}/")
